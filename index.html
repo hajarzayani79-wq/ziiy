@@ -1,28 +1,100 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Guess Game</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        .game-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            width: 300px;
+            margin: auto;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        input {
+            padding: 10px;
+            width: 80%;
+            border: none;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            background-color: #00c9a7;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #00a98f;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
 </head>
+
 <body>
 
-    <h1>🎮 Guess the Number</h1>
-    <p>Guess a number between 1 and 100</p>
+    <div class="game-box">
+        <h1>🎮 Guess the Number</h1>
+        <p>Guess a number between 1 and 100</p>
 
-    <input type="number" id="guess">
-    <button onclick="checkGuess()">Check</button>
+        <input type="number" id="guess" placeholder="Enter number">
+        <br>
+        <button onclick="checkGuess()">Check</button>
 
-    <p id="result"></p>
+        <p id="result"></p>
+    </div>
 
     <script>
         let number = Math.floor(Math.random() * 100) + 1;
 
         function checkGuess() {
-            let userGuess = document.getElementById("guess").value;
+            let userGuess = Number(document.getElementById("guess").value);
+            let result = document.getElementById("result");
 
-            if (userGuess == number) {
-                document.getElementById("result").innerText = "🎉 Correct!";
-            } else {
-                document.getElementById("result").innerText = "❌ Try again!";
+            if (!userGuess) {
+                result.innerText = "⚠️ Enter a number!";
+                return;
+            }
+
+            if (userGuess === number) {
+                result.innerText = "🎉 Correct! You won!";
+                result.style.color = "#00ffcc";
+            } 
+            else if (userGuess < number) {
+                result.innerText = "📉 Too small! Try a bigger number";
+                result.style.color = "#ffd166";
+            } 
+            else {
+                result.innerText = "📈 Too big! Try a smaller number";
+                result.style.color = "#ff6b6b";
             }
         }
     </script>
