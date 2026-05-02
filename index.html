@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Guess Game</title>
+</head>
+<body>
+
+    <h1>🎮 Guess the Number</h1>
+    <p>Guess a number between 1 and 10</p>
+
+    <input type="number" id="guess">
+    <button onclick="checkGuess()">Check</button>
+
+    <p id="result"></p>
+
+    <script>
+        let number = Math.floor(Math.random() * 10) + 1;
+
+        function checkGuess() {
+            let userGuess = document.getElementById("guess").value;
+
+            if (userGuess == number) {
+                document.getElementById("result").innerText = "🎉 Correct!";
+            } else {
+                document.getElementById("result").innerText = "❌ Try again!";
+            }
+        }
+    </script>
+
+</body>
+</html>
