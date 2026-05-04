@@ -1,103 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Guess Game</title>
+<meta charset="UTF-8">
+<title>Advanced Guess Game</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: white;
+    text-align: center;
+    padding-top: 80px;
+}.game-box { background: rgba(255,255,255,0.1); padding: 30px; border-radius: 20px; width: 320px; margin: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
-            color: white;
-            text-align: center;
-            padding-top: 100px;
-        }
+input, button { padding: 10px; border-radius: 10px; border: none; margin-top: 10px; }
 
-        .game-box {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 20px;
-            width: 300px;
-            margin: auto;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-        }
+button { background: #00c9a7; color: white; cursor: pointer; }
 
-        h1 {
-            margin-bottom: 10px;
-        }
+button:hover { background: #00a98f; }
 
-        input {
-            padding: 10px;
-            width: 80%;
-            border: none;
-            border-radius: 10px;
-            margin-top: 10px;
-            font-size: 16px;
-        }
+#result { margin-top: 15px; font-weight: bold; } #attempts, #score { margin-top: 10px; } </style>
 
-        button {
-            margin-top: 15px;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 10px;
-            background-color: #00c9a7;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+</head><body>
+<div class="game-box">
+    <h1>🎮 Guess Game PRO</h1>
+    <p>Guess number between 1 - 100</p><input type="number" id="guess" placeholder="Enter number">
+<br>
+<button onclick="checkGuess()">Check</button>
+<button onclick="restartGame()">Restart</button>
 
-        button:hover {
-            background-color: #00a98f;
-        }
+<p id="result"></p>
+<p id="attempts">Attempts: 0</p>
+<p id="score">Score: 100</p>
 
-        #result {
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-    </style>
-</head>
+</div><script>
+let number = Math.floor(Math.random()*100)+1;
+let attempts = 0;
+let score = 100;
 
-<body>
+function checkGuess(){
+    let guess = Number(document.getElementById("guess").value);
+    let result = document.getElementById("result");
 
-    <div class="game-box">
-        <h1>🎮 Guess the Number</h1>
-        <p>Guess a number between 1 and 100</p>
+    if(!guess){
+        result.innerText = "⚠️ Enter a number";
+        return;
+    }
 
-        <input type="number" id="guess" placeholder="Enter number">
-        <br>
-        <button onclick="checkGuess()">Check</button>
+    attempts++;
+    score -= 10;
 
-        <p id="result"></p>
-    </div>
+    document.getElementById("attempts").innerText = "Attempts: " + attempts;
+    document.getElementById("score").innerText = "Score: " + score;
 
-    <script>
-        let number = Math.floor(Math.random() * 100) + 1;
+    if(guess === number){
+        result.innerText = "🎉 You win!";
+        result.style.color = "#00ffcc";
+    }else if(guess < number){
+        result.innerText = "📉 Too small";
+    }else{
+        result.innerText = "📈 Too big";
+    }
+}
 
-        function checkGuess() {
-            let userGuess = Number(document.getElementById("guess").value);
-            let result = document.getElementById("result");
-
-            if (!userGuess) {
-                result.innerText = "⚠️ Enter a number!";
-                return;
-            }
-
-            if (userGuess === number) {
-                result.innerText = "🎉 Correct! You won!";
-                result.style.color = "#00ffcc";
-            } 
-            else if (userGuess < number) {
-                result.innerText = "📉 Too small! Try a bigger number";
-                result.style.color = "#ffd166";
-            } 
-            else {
-                result.innerText = "📈 Too big! Try a smaller number";
-                result.style.color = "#ff6b6b";
-            }
-        }
-    </script>
-
-</body>
+function restartGame(){
+    number = Math.floor(Math.random()*100)+1;
+    attempts = 0;
+    score = 100;
+    document.getElementById("result").innerText = "";
+    document.getElementById("attempts").innerText = "Attempts: 0";
+    document.getElementById("score").innerText = "Score: 100";
+    document.getElementById("guess").value = "";
+}
+</script></body>
 </html>
